@@ -1,20 +1,32 @@
 # Oh my EFI!
 
-**Oh my EFI!** is a full classic BIOS Setup Utility and hardware unlocker packed into a single freestanding `.efi` file (`SetupX64.efi` / `SetupIA32.efi`).
+**Oh my EFI!** (`v0.5.0`) is a full classic BIOS Setup Utility and hardware unlocker packed into a single freestanding `.efi` file (`SetupX64.efi` / `SetupIA32.efi`).
 
-Most laptop and prebuilt motherboard vendors (Dell, Lenovo, HP, OEM boards) hide half of your BIOS menus behind `SUPPRESS_IF` rules, lock out CPU undervolting after Plundervolt (`Overclocking Lock` / `CFG Lock`), hide Intel ME / AMD PSP toggles, or lock down UMA/DVMT VRAM size, Above 4G Decoding, and Resizable BAR. Instead of extracting BIOS `.exe` updates on another PC, running `UEFITool` + `ifrextractor`, and typing blind `setup_var_3` commands in a GRUB shell, you can drop **Oh my EFI!** onto a FAT32 USB stick, boot it, and inspect or unlock everything from a keyboard-only classic blue/gray BIOS Setup screen.
+Ever wished your **Apple Intel Mac** actually had a real BIOS Setup screen when you hold `Option` at boot instead of nothing at all? Or wished your **Dell / Lenovo / HP laptop or desktop motherboard** didn't hide half of its BIOS settings behind `SUPPRESS_IF` locks? That's what **Oh my EFI!** is built for:
 
-It runs on Intel and AMD UEFI PCs, laptops (Dell XPS/Inspiron/Latitude/Precision, ThinkPads, gaming laptops, desktop boards), virtual machines (QEMU/OVMF, VMware, Proxmox), and Intel Macs.
+- **Brings a real BIOS Setup Utility to Apple Intel Macs**: Apple never shipped a BIOS menu on Intel MacBook Pros, iMacs, Mac minis, or Mac Pros. Drop Oh my EFI! onto a USB stick (or your ESP) and your Intel Mac gets a classic blue/gray Aptio-style BIOS Setup screen to view real CPU/RAM/PCIe specs, switch dual-GPU `gpu-power-prefs` muxing (lifesaver on older dual-GPU MacBook Pros), edit `boot-args`, toggle SIP (`csr-active-config`), set startup chime volume, tweak CPU multipliers/threads, manage UEFI boot entries, and chainload your OS. *(On non-Apple PCs, all Apple-specific options stay completely hidden.)*
+- **Unlocks & reveals hidden BIOS menus on Intel & AMD PCs**: Instead of extracting vendor BIOS `.exe` capsules on another machine, digging through `UEFITool` + `ifrextractor`, and typing blind offsets in a GRUB shell, boot Oh my EFI! to browse hidden HII/IFR menus, unlock `CFG Lock` (`MSR 0xE2`) & undervolting, run `setup_var_3` / `setup_var_cv` with live IFR cross-checks, tweak Intel ME / AMD PSP / SMN / ReBAR / VRAM, or apply temporary hardware identity spoofs.
 
 > [!CAUTION]
-> **Warning — Read Before Changing Anything!**
+> **HEAVILY VIBE-CODED PROJECT & HARDWARE BRICKING WARNING — USE AT YOUR OWN RISK!**
 >
-> This tool talks directly to real hardware registers (Ring-0 CPU MSRs, Intel FIVR `MSR 0x150`, Intel ME HECI1 MMIO, SPI `BIOS_CNTL`, PCI/PCIe config space, physical RAM) and writes directly into your motherboard's raw NVRAM `VarStore`s (`Setup`, `CpuSetup`, `SaSetup`, `PchSetup`, `MeSetup`, AMD CBS/PBS, etc.) without vendor safety rails.
+> **Heads up: this project was heavily vibe-coded!** On top of that, it pokes directly at bare-metal Ring-0 hardware registers (CPU MSRs, Intel FIVR `MSR 0x150`, Intel ME HECI1 MMIO, AMD SMN, SPI `BIOS_CNTL`, PCI/PCIe config space, physical RAM) and writes straight into your motherboard's raw NVRAM `VarStore`s (`Setup`, `CpuSetup`, `SaSetup`, `PchSetup`, `MeSetup`, AMD CBS/PBS, etc.) with **zero vendor training wheels**.
 >
-> **Randomly flipping settings or typing wrong VarStore offsets CAN brick your machine** (black screen on boot, boot loops, unstable CPU/RAM clocks or undervolts, or corrupt NVRAM/SPI state requiring a CMOS battery pull — or an external CH341A SPI flash programmer on laptops where NVRAM lives on the BIOS chip).
-> - Always press **`F12` (EFI Dump)** first so you have a full backup of your original NVRAM `.bin` variables, HII/IFR tables, ACPI, and SMBIOS on your USB drive.
-> - Never blindly apply hex offsets meant for a different laptop model or BIOS version — let Oh my EFI!'s live IFR cross-check verify what an offset actually controls on *your* firmware.
-> - Only change one thing at a time, and know how to clear CMOS / reset NVRAM on your specific device before experimenting. Use at your own risk!
+> **Randomly flipping settings or writing wrong VarStore offsets CAN brick your computer** — including black screens on POST, boot loops, unstable clocks/undervolts, or corrupt NVRAM/SPI state requiring a CMOS battery pull (or an external CH341A SPI flash programmer on laptops where NVRAM shares the BIOS flash chip).
+> - **Always press `F12` (`EFI Dump`) first** so you have a full backup of your original NVRAM `.bin` stores, HII/IFR packages, ACPI tables, and SMBIOS on your USB stick.
+> - **Never blindly punch in hex offsets** meant for a different laptop model or BIOS revision — check Oh my EFI!'s live IFR match first.
+> - Change one thing at a time, know how to reset CMOS / NVRAM on your machine, and **use this software strictly under your own risk!**
+
+---
+
+## Downloads (Not Hosted on GitHub!)
+
+**Prebuilt `.efi` binaries and bootable USB images are NOT available on GitHub / GitHub Releases.**
+Grab prebuilt builds (`SetupX64.efi`, `SetupIA32.efi`, `EFI-Setup-ESP.zip`, `EFI-Setup-USB.img.zip`, and `SHA256SUMS.txt`) directly from:
+
+- **`https://dl.blueskychan.dev/efi-setup/`**
+
+*(Or clone this repo and build everything from source in ~2 seconds with `make`.)*
 
 ---
 
@@ -91,7 +103,7 @@ Outputs:
 
 ## Downloads
 
-Prebuilt binaries and USB images: **`https://dl.blueskychan.dev/efi-setup/`**
+Prebuilt binaries and USB images are **not hosted on GitHub Releases** — download them directly at **`https://dl.blueskychan.dev/efi-setup/`**.
 
 ---
 
