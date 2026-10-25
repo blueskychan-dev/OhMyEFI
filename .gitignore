@@ -1,0 +1,7 @@
+build/
+SetupX64.efi
+SetupIA32.efi
+*.img
+*.fd
+*.ppm
+__pycache__/
