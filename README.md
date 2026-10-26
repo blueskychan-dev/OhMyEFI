@@ -28,6 +28,14 @@ Grab prebuilt builds (`SetupX64.efi`, `SetupIA32.efi`, `EFI-Setup-ESP.zip`, `EFI
 
 *(Or clone this repo and build everything from source in ~2 seconds with `make`.)*
 
+> [!WARNING]
+> **Not All Settings Are Changeable — Values May Reset After Reboot or NVRAM Reset!**
+>
+> Depending on your motherboard, laptop vendor, or Mac firmware, **not every setting or config shown in Oh my EFI! can actually be changed**, and **some values may revert back to default after a Reboot, CMOS clear, or Reset NVRAM** (`Cmd+Opt+P+R`):
+> - **Hardware & Firmware Locks**: Write-once CPU/chipset lock bits (`CFG Lock`, `OC Lock`, SPI `BLE`/`EISS`/`FLOCKDN`, Intel Boot Guard, AMD `SMMLock`/`SVMLock`), SMM write-protected NVRAM variables, or OEM BIOS self-healing / checksum / AGESA APCB sync may block edits or restore factory values on the next boot.
+> - **Volatile / Live Register Tweaks**: Live Ring-0 MSR changes, FIVR undervolts, PCIe registers, and Temporary Device/Vendor Spoofs only live for the current power cycle — **chainload your OS directly from Oh my EFI!** without resetting (or use `Startup Auto-Patch` for CPU/MSR/FIVR tweaks).
+> - **Please Contribute!** Found a setting that won't stick, a quirk on your BIOS, or want better support for your laptop / motherboard / Intel Mac? **Please consider contributing** — open an Issue or Pull Request on GitHub (attaching `OhMyEFI_Report.txt` / `HII_Decoded_Options.txt` from `F12` **EFI Dump**, with your serials/UUID redacted if you prefer)!
+
 ---
 
 ## What It Can Do
@@ -83,6 +91,21 @@ Grab prebuilt builds (`SetupX64.efi`, `SetupIA32.efi`, `EFI-Setup-ESP.zip`, `EFI
 | `F10` | Save staged NVRAM/RTC changes and exit |
 | `F12` | Run **EFI Dump** to the boot directory |
 | `ESC` | Go back / exit without saving |
+
+---
+
+## Tested Devices
+
+Tested on real bare-metal hardware dumps and UEFI virtual machines:
+
+| Device / Board | Firmware | CPU / Platform | GPU / Notes |
+| :--- | :--- | :--- | :--- |
+| **Gigabyte X570 GAMING X** | AMI Aptio V (UEFI 2.70) | AMD Ryzen 9 5950X (`16C/32T`), 128 GB DDR4-3200 | AMD Radeon RX 9070 XT (`16 GB`, ReBAR), AMD SMN/CBS/PBS |
+| **Lenovo ThinkPad P51** | Lenovo UEFI 2.x | Intel Core / Xeon Mobile Workstation | ThinkPad HII / NVRAM, `MP_SERVICES` topology, Intel MSRs |
+| **Apple MacBook Pro (Early 2011)** | Apple EFI 1.10 | Intel Core Sandy Bridge (`2C/4T`) | Apple NVRAM (`boot-args`, SIP, chime, `gpu-power-prefs`), MADT/CPUID topology |
+| **QEMU / KVM (`q35`)** | EDK2 OVMF (`X64` & `IA32`) | Virtual Intel & AMD (`EPYC` / `Skylake`) | Secure Boot / Setup Mode, NVRAM, HII, Temp Spoofer & OS chainloading |
+
+Tested it on another Mac, laptop, or motherboard? Feel free to send a PR or open an issue to add your machine to the list!
 
 ---
 
