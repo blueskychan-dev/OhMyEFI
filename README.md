@@ -102,6 +102,7 @@ Tested on real bare-metal hardware dumps and UEFI virtual machines:
 | :--- | :--- | :--- | :--- |
 | **Gigabyte X570 GAMING X** | AMI Aptio V (UEFI 2.70) | AMD Ryzen 9 5950X (`16C/32T`), 128 GB DDR4-3200 | AMD Radeon RX 9070 XT (`16 GB`, ReBAR), AMD SMN/CBS/PBS |
 | **Lenovo ThinkPad P51** | Lenovo UEFI 2.x | Intel Core / Xeon Mobile Workstation | ThinkPad HII / NVRAM, `MP_SERVICES` topology, Intel MSRs |
+| **Acer Aspire Series** | InsydeH2O UEFI | Laptop Platform | InsydeH2O `Setup` / `Custom` VarStore, HII / NVRAM & EFI Dump |
 | **Apple MacBook Pro (Early 2011)** | Apple EFI 1.10 | Intel Core Sandy Bridge (`2C/4T`) | Apple NVRAM (`boot-args`, SIP, chime, `gpu-power-prefs`), MADT/CPUID topology |
 | **QEMU / KVM (`q35`)** | EDK2 OVMF (`X64` & `IA32`) | Virtual Intel & AMD (`EPYC` / `Skylake`) | Secure Boot / Setup Mode, NVRAM, HII, Temp Spoofer & OS chainloading |
 
