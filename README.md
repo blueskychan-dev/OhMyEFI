@@ -34,7 +34,7 @@ Grab prebuilt builds (`SetupX64.efi`, `SetupIA32.efi`, `EFI-Setup-ESP.zip`, `EFI
 > Depending on your motherboard, laptop vendor, or Mac firmware, **not every setting or config shown in Oh my EFI! can actually be changed**, and **some values may revert back to default after a Reboot, CMOS clear, or Reset NVRAM** (`Cmd+Opt+P+R`):
 > - **Hardware & Firmware Locks**: Write-once CPU/chipset lock bits (`CFG Lock`, `OC Lock`, SPI `BLE`/`EISS`/`FLOCKDN`, Intel Boot Guard, AMD `SMMLock`/`SVMLock`), SMM write-protected NVRAM variables, or OEM BIOS self-healing / checksum / AGESA APCB sync may block edits or restore factory values on the next boot.
 > - **Volatile / Live Register Tweaks**: Live Ring-0 MSR changes, FIVR undervolts, PCIe registers, and Temporary Device/Vendor Spoofs only live for the current power cycle — **chainload your OS directly from Oh my EFI!** without resetting (or use `Startup Auto-Patch` for CPU/MSR/FIVR tweaks).
-> - **Please Contribute!** Found a setting that won't stick, a quirk on your BIOS, or want better support for your laptop / motherboard / Intel Mac? **Please consider contributing** — open an Issue or Pull Request on GitHub (attaching `OhMyEFI_Report.txt` / `HII_Decoded_Options.txt` from `F12` **EFI Dump**, with your serials/UUID redacted if you prefer)!
+> - **Please keep this in mind!** Always double-check whether your changes actually persisted after rebooting (or after resetting NVRAM / clearing CMOS), and don't assume every unlocked toggle will permanently stick on locked vendor firmware.
 
 ---
 
